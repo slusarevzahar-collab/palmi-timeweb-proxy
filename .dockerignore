@@ -4,3 +4,6 @@
 !probe.mjs
 !probe-manifest.json
 !connection-test.html
+!boot.mjs
+!quest-v25.enc
+!quest-v25.manifest.json
