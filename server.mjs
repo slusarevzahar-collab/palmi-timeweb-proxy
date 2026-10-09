@@ -133,7 +133,7 @@ export function createProxy({publicOrigin, upstream=ORIGIN, probeOnly=true, diag
     deadline.unref();
     const finish=()=>clearTimeout(deadline);
     response.on('finish',finish);
-    response.on('close',()=>{finish();outgoing.destroy();upstreamResponse?.destroy();});
+    response.on('close',()=>{finish();if(!response.writableFinished){outgoing.destroy();upstreamResponse?.destroy();}});
     outgoing.on('error',()=>fail(502));
     request.on('aborted',()=>outgoing.destroy());
     request.on('error',()=>outgoing.destroy());
