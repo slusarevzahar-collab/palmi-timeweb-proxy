@@ -90,8 +90,10 @@ test('dropped upstream write returns error and is never retried',async()=>{
 test('stalled upstream is bounded by a total deadline',async()=>{
   const bounded=createProxy({upstream,publicOrigin:publish,probeOnly:false,timeout:50});await new Promise(r=>bounded.listen(0,'127.0.0.1',r));
   try {
-    const started=Date.now();const result=await fetch('http://127.0.0.1:'+bounded.address().port+'/slow',{headers:{host:new URL(publish).host}});
-    assert.ok([502,504].includes(result.status));assert.ok(Date.now()-started<1500);
+    const started=Date.now();const status=await new Promise((resolve,reject)=>{
+      const req=http.get({hostname:'127.0.0.1',port:bounded.address().port,path:'/slow',headers:{host:new URL(publish).host}},res=>{res.resume();res.on('end',()=>resolve(res.statusCode));});req.on('error',reject);
+    });
+    assert.ok([502,504].includes(status),'Expected bounded upstream failure, got '+status);assert.ok(Date.now()-started<1500);
   }finally{bounded.closeAllConnections();await new Promise(r=>bounded.close(r));}
 });
 test('probe-only mode never forwards gameplay, health is not readiness',async()=>{
