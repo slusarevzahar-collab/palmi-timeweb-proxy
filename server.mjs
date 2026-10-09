@@ -3,11 +3,13 @@ import https from 'node:https';
 import {Transform} from 'node:stream';
 import {createGunzip,createBrotliDecompress,createInflate} from 'node:zlib';
 import {pathToFileURL} from 'node:url';
+import {readFileSync} from 'node:fs';
 import {runProbe, ORIGIN} from './probe.mjs';
 
 const HOP = new Set(['connection','keep-alive','proxy-authenticate','proxy-authorization','te','trailer','transfer-encoding','upgrade']);
 const MAX_TEXT = 8 * 1024 * 1024;
 const MAX_UPLOAD = 24 * 1024 * 1024;
+const CONNECTION_TEST=readFileSync(new URL('./connection-test.html',import.meta.url));
 const unsafe = method => !['GET','HEAD','OPTIONS'].includes(method);
 
 function cleanHeaders(input) {
@@ -52,6 +54,10 @@ export function createProxy({publicOrigin, upstream=ORIGIN, probeOnly=true, diag
       if(incoming.origin!=='http://local.invalid')throw new Error('invalid target');
     }catch{return reply(response,400,{error:'Invalid request target'});}
     const path=incoming.pathname;
+    if(probeOnly&&path==='/'&&['GET','HEAD'].includes(request.method)) {
+      response.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Length':String(CONNECTION_TEST.length),'Referrer-Policy':'no-referrer'});
+      return response.end(request.method==='HEAD'?undefined:CONNECTION_TEST);
+    }
     if(path==='/__proxy/health' && ['GET','HEAD'].includes(request.method))return reply(response,200,{process:'up',mode:probeOnly?'probe':'proxy',upstreamVerified:false});
     if(path==='/__proxy/probe' && ['GET','HEAD'].includes(request.method)) {
       const result=diagnostics();

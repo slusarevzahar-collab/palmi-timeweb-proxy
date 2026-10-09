@@ -99,6 +99,12 @@ test('stalled upstream is bounded by a total deadline',async()=>{
 test('probe-only mode never forwards gameplay, health is not readiness',async()=>{
   const only=createProxy({upstream,probeOnly:true,diagnostics:()=>({status:'fail'})});await new Promise(r=>only.listen(0,'127.0.0.1',r));
   const base='http://127.0.0.1:'+only.address().port;
-  try {assert.equal((await fetch(base+'/api/command',{method:'POST'})).status,503);assert.equal((await fetch(base+'/__proxy/probe')).status,503);assert.equal((await (await fetch(base+'/__proxy/health')).json()).upstreamVerified,false);}finally{only.closeAllConnections();await new Promise(r=>only.close(r));}
+  try {
+    const page=await fetch(base+'/');assert.equal(page.status,200);assert.match(await page.text(),/не игровая версия/);
+    assert.equal((await fetch(base+'/',{method:'POST'})).status,503);
+    assert.equal((await fetch(base+'/api/command',{method:'POST'})).status,503);
+    assert.equal((await fetch(base+'/__proxy/probe')).status,503);
+    assert.equal((await (await fetch(base+'/__proxy/health')).json()).upstreamVerified,false);
+  }finally{only.closeAllConnections();await new Promise(r=>only.close(r));}
 });
 test('cleanup',async()=>{proxy.closeAllConnections();origin.closeAllConnections();await Promise.all([new Promise(r=>proxy.close(r)),new Promise(r=>origin.close(r))]);});

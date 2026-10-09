@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ru">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ПальмиКвест — проверка российского сервера</title>
+<style>
+:root{color-scheme:light;font:17px/1.5 system-ui,sans-serif;color:#111d3d;background:#edf3e6}*{box-sizing:border-box}body{margin:0;min-height:100svh;display:grid;place-items:center;padding:24px}main{width:min(100%,540px);background:#fff;border:1px solid #d8e2ce;border-radius:28px;padding:28px;box-shadow:0 22px 60px #12203920}small{display:inline-block;background:#fff0cc;color:#725012;padding:6px 12px;border-radius:9px;font-weight:700}h1{font-size:clamp(26px,6vw,36px);line-height:1.12;margin:22px 0 12px}h2{font-size:21px;margin:24px 0 8px}p{margin:12px 0}button{font:inherit;font-weight:800;border:0;border-radius:15px;background:#d9ff57;color:#111d3d;padding:16px;width:100%;cursor:pointer}button:disabled{opacity:.6}#result{padding:14px;border-radius:14px;background:#f1f7e8;min-height:76px}footer{font-size:14px;color:#5f6b7c;border-top:1px solid #e5e9e0;margin-top:24px;padding-top:18px}
+</style>
+<main>
+<small>Тест доступности · не игровая версия</small>
+<h1>ПальмиКвест.<br>Российский сервер</h1>
+<p>Эта страница загружена с нашего сервера Timeweb в Москве. Она не обращается к ChatGPT и не перенаправляет на старый сайт.</p>
+<h2>Проверьте без VPN</h2>
+<p>Отключите VPN на телефоне и нажмите кнопку. Если проверка проходит, новый адрес доступен в вашей сети.</p>
+<button id="check" type="button">Проверить соединение</button>
+<p id="result" role="status" aria-live="polite">Страница открылась. Осталось проверить связь с сервером.</p>
+<footer>Это только проверка нового адреса. Пульт, игры, участники и награды пока не подключены. Исходный квест и его данные не изменены.</footer>
+</main>
+<script>
+const button=document.querySelector('#check'),result=document.querySelector('#result');
+button.addEventListener('click',async()=>{button.disabled=true;result.textContent='Проверяем связь…';try{const response=await fetch('/__proxy/health',{cache:'no-store',signal:AbortSignal.timeout(10000)});const data=await response.json();if(!response.ok||data.process!=='up')throw new Error();result.textContent='Связь с российским сервером работает. '+new Date().toLocaleTimeString('ru-RU')+'. Игровая версия ещё не подключена.';}catch{result.textContent='Связь не подтверждена. Сообщите, что страница открылась, но проверка не прошла.';}finally{button.disabled=false;}});
+</script>
+</html>
