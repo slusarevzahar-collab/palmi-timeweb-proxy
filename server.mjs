@@ -158,7 +158,7 @@ if(process.argv[1] && import.meta.url===pathToFileURL(process.argv[1]).href) {
     console.log(JSON.stringify({event:'started',mode:probeOnly?'probe':'proxy'}));
     runProbe().then(result=>{
       report=result;
-      console.log(JSON.stringify({event:'upstream_probe',status:result.status,requiredFailures:result.results.filter(r=>r.required&&!r.ok).map(r=>({path:r.path,status:r.status,error:r.error}))}));
+      console.log(JSON.stringify({event:'upstream_probe',status:result.status,requiredFailures:result.results.filter(r=>r.required&&!r.ok).map(r=>({path:r.path,status:r.status,error:r.error,server:r.server,rejection:r.rejection}))}));
     }).catch(()=>{report={status:'fail',error:'Probe failed'};});
   });
   for(const signal of ['SIGTERM','SIGINT'])process.on(signal,()=>{server.close();setTimeout(()=>process.exit(0),10000).unref();});

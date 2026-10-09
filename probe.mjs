@@ -26,7 +26,13 @@ function check(entry,origin=ORIGIN) {
         else if(entry.kind==='js')valid &&=/(javascript|ecmascript)/.test(mime)&&!sample.toString().includes('<!doctype');
         else if(entry.kind==='font')valid &&=!mime.includes('text/html')&&size>1000;
         if(!valid)reason=status!==200?'HTTP status or redirect':'Unexpected content; possible auth/HTML fallback';
-        finish({ok:valid,status,mime,bytes:size,image,error:reason});
+        // Only unauthenticated public GETs are used. Capture a short rejection
+        // message for the primary endpoints, never request cookies or tokens.
+        const evidence=!valid&&['html','json'].includes(entry.kind)?{
+          server:String(response.headers.server||''),
+          rejection:sample.toString('utf8').replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi,'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,1200)
+        }:{};
+        finish({ok:valid,status,mime,bytes:size,image,error:reason,...evidence});
       });
       response.on('error',()=>finish({ok:false,status:response.statusCode,error:'Response interrupted'}));
     });
