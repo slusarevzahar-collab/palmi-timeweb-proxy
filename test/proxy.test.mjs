@@ -16,6 +16,8 @@ const origin=http.createServer(async(req,res)=>{
   if(req.url==='/external'){res.writeHead(302,{Location:'https://external.example/login'});res.end();return;}
   if(req.url==='/gzip'){res.writeHead(200,{'Content-Type':'text/html','Content-Encoding':'gzip'});res.end(gzipSync('<a href="'+upstream+'/page">mock</a>'));return;}
   if(req.url==='/fail'){res.writeHead(503,{'Content-Type':'application/json','Retry-After':'5'});res.end('{"error":"later"}');return;}
+  if(req.url==='/drop'){req.socket.destroy();return;}
+  if(req.url==='/slow'){setTimeout(()=>{if(!res.destroyed)res.end('too late');},150).unref();return;}
   res.writeHead(200,{'Content-Type':'application/json','Set-Cookie':['palmi-host=fake-test-cookie; Path=/; HttpOnly; SameSite=Strict; Secure','second=mock; Domain=127.0.0.1; Path=/; Secure'],ETag:'old-hash','Content-Security-Policy':"default-src 'self' "+upstream});
   res.end(JSON.stringify({url:upstream+'/asset',escaped:upstream.replaceAll('/','\\/'),method:req.method,body,origin:req.headers.origin,referer:req.headers.referer}));
 });
@@ -81,6 +83,16 @@ test('compressed HTML decodes and rewrites without stale encoding',async()=>{
 test('HEAD has no body; query and escaped absolute URL preserve meaning',async()=>{
   const head=await get('/image',{},'HEAD');assert.equal(head.status,200);assert.equal(head.body.length,0);
   const result=await get('/query?one=1&two=2');assert.equal(requests.at(-1).path,'/query?one=1&two=2');assert.equal(JSON.parse(result.body).escaped,publish.replaceAll('/','\\/'));
+});
+test('dropped upstream write returns error and is never retried',async()=>{
+  const before=requests.length,result=await get('/drop',{},'POST','mock');assert.equal(result.status,502);assert.equal(requests.length,before+1);
+});
+test('stalled upstream is bounded by a total deadline',async()=>{
+  const bounded=createProxy({upstream,publicOrigin:publish,probeOnly:false,timeout:50});await new Promise(r=>bounded.listen(0,'127.0.0.1',r));
+  try {
+    const started=Date.now();const result=await fetch('http://127.0.0.1:'+bounded.address().port+'/slow',{headers:{host:new URL(publish).host}});
+    assert.ok([502,504].includes(result.status));assert.ok(Date.now()-started<1500);
+  }finally{bounded.closeAllConnections();await new Promise(r=>bounded.close(r));}
 });
 test('probe-only mode never forwards gameplay, health is not readiness',async()=>{
   const only=createProxy({upstream,probeOnly:true,diagnostics:()=>({status:'fail'})});await new Promise(r=>only.listen(0,'127.0.0.1',r));
