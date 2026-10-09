@@ -37,9 +37,13 @@ function check(entry,origin=ORIGIN) {
 }
 export async function runProbe() {
   const manifest=JSON.parse(await readFile(new URL('./probe-manifest.json',import.meta.url),'utf8'));
-  const results=[],queue=[...manifest.entries];
-  await Promise.all(Array.from({length:3},async()=>{while(queue.length)results.push(await check(queue.shift()));}));
-  return {status:results.every(r=>!r.required||r.ok)?'pass':'fail',checkedAt:new Date().toISOString(),origin:ORIGIN,sourceVersion:manifest.sourceVersion,sourceCommit:manifest.sourceCommit,regionalVerification:'Confirm Russian deployment region in Timeweb; this probe does not infer country',method:'GET only; no login, session creation or reward writes',results};
+  // Fail fast on the origin/API. Do not spend ten minutes trying every image
+  // when the Russian node cannot establish even the primary connection.
+  const initial=manifest.entries.filter(e=>['html','json'].includes(e.kind));
+  const results=await Promise.all(initial.map(entry=>check(entry)));
+  const queue=manifest.entries.filter(e=>!initial.includes(e));
+  if(results.every(r=>r.ok))await Promise.all(Array.from({length:3},async()=>{while(queue.length)results.push(await check(queue.shift()));}));
+  return {status:results.every(r=>!r.required||r.ok)&&queue.length===0?'pass':'fail',checkedAt:new Date().toISOString(),origin:ORIGIN,sourceVersion:manifest.sourceVersion,sourceCommit:manifest.sourceCommit,regionalVerification:'Confirm Russian deployment region in Timeweb; this probe does not infer country',method:'GET only; no login, session creation or reward writes',remainingNotChecked:queue.length,results};
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href) {
   const result=await runProbe();console.log(JSON.stringify(result,null,2));process.exitCode=result.status==='pass'?0:1;
