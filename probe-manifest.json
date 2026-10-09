@@ -1,0 +1,462 @@
+{
+  "sourceVersion": 25,
+  "sourceCommit": "767b1f0d4a6199d0f074f8270dbb6414cec61523",
+  "scope": "Static shipped resources, all five registered parts, all active prize wallpapers. Dynamic R2 photos/voice require authenticated live checks.",
+  "entries": [
+    {
+      "path": "/",
+      "kind": "html",
+      "required": true
+    },
+    {
+      "path": "/api/access",
+      "kind": "json",
+      "required": true
+    },
+    {
+      "path": "/access-console.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/app.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/assembly-manifest.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/balance-input.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/connection-state.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/data.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/energy-capture.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/generator-input.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/hold-state.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/join-input.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/module-catalog.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/module-outbox.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/modules.css",
+      "kind": "css",
+      "required": true
+    },
+    {
+      "path": "/modules.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/participant-ui.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/prize-catalog.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/prizes.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/quest-model.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/quest.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/studio.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/styles.css",
+      "kind": "css",
+      "required": true
+    },
+    {
+      "path": "/sw.js",
+      "kind": "js",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/generator-assembly-0.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/layer-core.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/part-core.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/layer-stabilizer.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/part-stabilizer.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/layer-control.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/part-control.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/layer-turbo.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/part-turbo.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/layer-lever.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/generator/registered/part-lever.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/rewards/wallpapers/ninja.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/ninja.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/space.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/space.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/pirate.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/pirate.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/wizard.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/wizard.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/diver.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/diver.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/archaeologist.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/archaeologist.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/hero.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/hero.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/rock.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/rock.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/racer.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/racer.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/jungle.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/jungle.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/dragon.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/dragon.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/chef.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/chef.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/skater.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/skater.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/winter.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/winter.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/robot.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/robot.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/gardener.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/gardener.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/artist.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/artist.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/aviator.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/aviator.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/knight.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/knight.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/rewards/wallpapers/astronomer.png",
+      "kind": "image",
+      "required": true
+    },
+    {
+      "path": "/assets/display-webp/rewards/artifacts/astronomer.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/generator/closed.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/generator/open.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/generator/registered/generator-assembly-1-core.png",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/generator/registered/generator-assembly-2-stabilizer.png",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/generator/registered/generator-assembly-3-control.png",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/generator/registered/generator-assembly-4-turbo.png",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/generator/registered/generator-assembly-5-lever.png",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/generator/explosion-transparent.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/palmi-greeting.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/palmi-encourage.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/palmi-emotions.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/animator-male.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/display-webp/animator-female.webp",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/materials-font.ttf",
+      "kind": "font",
+      "required": true
+    },
+    {
+      "path": "/assets/login-playground-portrait.png",
+      "kind": "image",
+      "required": false
+    },
+    {
+      "path": "/assets/palmi-inviting.png",
+      "kind": "image",
+      "required": false
+    }
+  ]
+}
