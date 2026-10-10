@@ -1,8 +1,10 @@
 {
   "version": 25,
+  "revision": "RU-2026-10-10-photos-qr",
   "format": "PALMI001 AES-256-GCM",
-  "sha256": "9319ae51f1e49936519621e08d5cf745b391769adf15f4738678b04b98aa52b3",
-  "bytes": 85770959,
+  "sha256": "3d8d34035390fefc9c6f4e3203b488463a833c258748b111bfbffe42c7aa2f54",
+  "bytes": 85777928,
   "originalSourceCommit": "767b1f0d4a6199d0f074f8270dbb6414cec61523",
-  "includes": "compiled game, static assets, SQLite adapter, schema; NO database, credentials or PIN"
+  "ruSourceCommit": "f665699d3970904f4718db950465d72d940aa100",
+  "includes": "compiled game, static assets, SQLite adapter, schema, owner-only verified restore; NO database, uploaded originals, credentials or PIN"
 }

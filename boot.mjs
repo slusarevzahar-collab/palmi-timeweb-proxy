@@ -14,7 +14,7 @@ else{
     const plaintext=Buffer.concat([decipher.update(payload.subarray(36)),decipher.final()]);
     const destination=resolve('runtime'),archive=resolve('private-quest.tar.gz');mkdirSync(destination,{recursive:true,mode:0o700});writeFileSync(archive,plaintext,{mode:0o600});
     const entries=execFileSync('tar',['-tzf',archive],{encoding:'utf8',maxBuffer:1024*1024}).trim().split('\n');
-    for(const entry of entries){const clean=entry.replace(/\r$/,'').replace(/^\.\//,'');if(clean.startsWith('/')||clean.includes('\\')||clean.split('/').includes('..')||!(/^(game\/|schema\/|runtime\.mjs$|server\.mjs$|package\.json$)/.test(clean)))throw Error('Invalid package entry');}
+    for(const entry of entries){const clean=entry.replace(/\r$/,'').replace(/^\.\//,'');if(clean.startsWith('/')||clean.includes('\\')||clean.split('/').includes('..')||!(/^(game\/|schema\/|runtime\.mjs$|server\.mjs$|backup-tools\.mjs$|maintenance\.html$|package\.json$)/.test(clean)))throw Error('Invalid package entry');}
     execFileSync('tar',['-xzf',archive,'--no-same-owner','-C',destination]);
     process.env.DATA_DIR=resolve('data');mkdirSync(process.env.DATA_DIR,{recursive:true,mode:0o700});
     // Never pass the decryption key on to the web application or its children.
