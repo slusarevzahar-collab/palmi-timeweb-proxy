@@ -3,6 +3,7 @@ import {createDecipheriv,createHash} from 'node:crypto';
 import {spawn,execFileSync} from 'node:child_process';
 import {resolve} from 'node:path';
 import {pipeline} from 'node:stream/promises';
+import http from 'node:http';
 
 // Probe remains the fail-closed default. No upstream or game data migration.
 if(process.env.RUN_MODE!=='quest')await import('./server.mjs').then(()=>{const child=spawn(process.execPath,['server.mjs'],{stdio:'inherit'});child.on('exit',code=>process.exit(code??1));});
@@ -29,6 +30,16 @@ else{
     const env={...process.env};delete env.PALMI_PACKAGE_KEY;
     if(process.env.PALMI_BIND_PORT)env.PORT=process.env.PALMI_BIND_PORT;
     const child=spawn(process.execPath,[resolve(destination,'server.mjs')],{stdio:'inherit',env});
+    // Diagnostic only: readiness is still verified independently by Timeweb.
+    let attempts=0;
+    const probe=()=>{
+      const req=http.get({hostname:'127.0.0.1',port:Number(env.PORT||8080),path:'/__proxy/health'},res=>{
+        res.resume();console.log(JSON.stringify({event:'quest_local_health',status:res.statusCode,port:Number(env.PORT||8080)}));
+      });
+      req.setTimeout(5000,()=>req.destroy(new Error('health_timeout')));
+      req.on('error',error=>{if(++attempts<10&&child.exitCode===null)setTimeout(probe,1000).unref();else console.error(JSON.stringify({event:'quest_local_health_failed',error:error.code||error.message}));});
+    };
+    setTimeout(probe,1000).unref();
     for(const signal of ['SIGTERM','SIGINT'])process.on(signal,()=>child.kill(signal));
     child.on('exit',code=>process.exit(code??1));
   }catch(error){console.error(JSON.stringify({event:'quest_start_failed',error:error.message}));process.exit(1);}
